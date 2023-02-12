@@ -24,6 +24,7 @@ dependencies:
   - pyyaml
   - setuptools_scm
   - statsmodels
+  - scikit-learn
   - toml
   - pip:
       - -e .

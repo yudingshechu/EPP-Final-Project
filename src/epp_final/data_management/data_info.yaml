@@ -16,6 +16,16 @@ categorical_columns:
   - highest_qualification
   - smoke
 
+variable1990:
+  - SERIAL
+  - CN1990A_SEX
+  - CN1990A_NATION
+  - CN1990A_HHTYA
+  - CN1990A_BIRTHY
+  - CN1990A_RELATE
+  - CN1990A_EDLEV1
+  - CN1990A_PERN
+
 column_rename_mapping:
   highest_qualification: qualification
 

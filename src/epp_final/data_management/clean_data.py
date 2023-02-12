@@ -34,3 +34,21 @@ def clean_data(data, data_info):
     data[data_info["outcome_numerical"]] = numerical_outcome
 
     return data
+
+
+def clean_raw_data(data, data_info):
+    """Generate data for year 1990.
+
+    Args:
+        data (pandas.DataFrame): raw data
+
+    Returns:
+        pandas.DataFrame: The 1990 data set.
+
+    """
+    data1990 = data[data["YEAR"] == 1990].copy()
+    data1990_2000 = data1990.filter(like="2000", axis=1).copy()
+    data1990_no2000 = data1990.drop(data1990_2000.columns, axis=1).copy()
+    data1990_no2000 = data1990_no2000[data_info["variable1990"]].copy()
+    data1990_no2000 = data1990_no2000.astype("int64")
+    return data1990_no2000
