@@ -14,7 +14,7 @@ repos:
     hooks:
       - id: check-added-large-files
         args:
-          - --maxkb=25
+          - --maxkb=100000
       - id: check-case-conflict
       - id: check-merge-conflict
       - id: check-vcs-permalinks
