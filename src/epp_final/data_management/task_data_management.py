@@ -5,6 +5,7 @@ import pytask
 
 from epp_final.config import BLD, SRC
 from epp_final.data_management.clean_data import clean_raw_data
+from epp_final.data_management.clean_data import clean_data
 from epp_final.utilities import read_yaml
 
 
@@ -12,8 +13,8 @@ from epp_final.utilities import read_yaml
     {
         "scripts": ["clean_data.py"],
         "data_info": SRC / "data_management" / "data_info1990.yaml",
-        "data": SRC / "data" / "raw_data.csv",
-    },
+        "data": SRC / "data" / "raw_data.csv"
+    }
 )
 @pytask.mark.produces(BLD / "python" / "data" / "data1990_raw.csv")
 def task_clean_data_1990(depends_on, produces):
