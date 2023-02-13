@@ -1,4 +1,5 @@
 """Functions plotting results."""
+import plotly.express as px
 
 
 def reformat_data(data):
@@ -17,3 +18,33 @@ def reformat_data(data):
         Pesr_all.append(data[f"{i}"][4])
         a3_all.append(data[f"{i}"][3])
     return a3_all, Pesr_all
+
+
+def plot_results(df, label, title):
+    """Plot with plotly.
+
+    Args:
+        df (pd.DataFrame): coefficients (y) and year (x)
+        label (dict): dict for x and y
+        title (string): figure title
+
+    Returns:
+        px.fig: figure
+
+    """
+    return px.line(df, x="x", y="y", labels=label, title=title)
+
+
+def plot_results_regional(df, label, title):
+    """Plot with plotly, with groups of urban and rural.
+
+    Args:
+        df (pd.DataFrame): coefficients (y) and year (x)
+        label (dict): dict for x and y
+        title (string): figure title
+
+    Returns:
+        px.fig: figure
+
+    """
+    return px.line(df, x="x", y="y", labels=label, title=title, color="region")
