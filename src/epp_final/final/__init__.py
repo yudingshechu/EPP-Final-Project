@@ -1,5 +1,5 @@
 """Functions for formatting results."""
 
-from epp_final.final.plot import plot_regression_by_age
+from epp_final.final.plot import reformat_data
 
-__all__ = [plot_regression_by_age]
+__all__ = [reformat_data]

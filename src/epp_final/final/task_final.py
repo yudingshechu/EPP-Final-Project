@@ -1,42 +1,45 @@
 """Tasks running the results formatting (tables, figures)."""
 
 import pandas as pd
+import plotly.express as px
 import pytask
 
 from epp_final.analysis.model import load_model
-from epp_final.config import BLD, GROUPS, SRC
-from epp_final.final import plot_regression_by_age
-from epp_final.utilities import read_yaml
+from epp_final.config import BLD
+from epp_final.final import reformat_data
 
-for group in GROUPS:
+kwargs = {
+    "produces1": BLD / "python" / "figures" / "A3.png",
+    "produces2": BLD / "python" / "figures" / "PESR.png",
+}
 
-    kwargs = {
-        "group": group,
-        "depends_on": {"predictions": BLD / "python" / "predictions" / f"{group}.csv"},
-        "produces": BLD / "python" / "figures" / f"smoking_by_{group}.png",
-    }
 
-    @pytask.mark.depends_on(
-        {
-            "data_info": SRC / "data_management" / "data_info.yaml",
-            "data": BLD / "python" / "data" / "data_clean.csv",
-        },
+@pytask.mark.depends_on(
+    {
+        "data": BLD / "python" / "models" / "coef1990.pickle",
+    },
+)
+@pytask.mark.task(kwargs=kwargs)
+def task_plot_results_all(depends_on, produces1, produces2):
+    """Plot the regression results by age (Python version)."""
+    data = load_model(depends_on["data"])
+    a3_all, Pesr_all = reformat_data(data)
+    x = [i + 1000 for i in range(980, 991)]
+    dfa3 = pd.DataFrame({"x": x, "y": a3_all})
+    dfpesr = pd.DataFrame({"x": x, "y": Pesr_all})
+    fig1 = px.line(
+        dfa3,
+        x="x",
+        y="y",
+        labels={"x": "Year", "y": "alpha 3"},
+        title="Policy Effect on Probability to be a male",
     )
-    @pytask.mark.task(id=group, kwargs=kwargs)
-    def task_plot_results_by_age_python(depends_on, group, produces):
-        """Plot the regression results by age (Python version)."""
-        data_info = read_yaml(depends_on["data_info"])
-        data = pd.read_csv(depends_on["data"])
-        predictions = pd.read_csv(depends_on["predictions"])
-        fig = plot_regression_by_age(data, data_info, predictions, group)
-        fig.write_image(produces)
-
-
-@pytask.mark.depends_on(BLD / "python" / "models" / "model.pickle")
-@pytask.mark.produces(BLD / "python" / "tables" / "estimation_results.tex")
-def task_create_results_table_python(depends_on, produces):
-    """Store a table in LaTeX format with the estimation results (Python version)."""
-    model = load_model(depends_on)
-    table = model.summary().as_latex()
-    with open(produces, "w") as f:
-        f.writelines(table)
+    fig2 = px.line(
+        dfpesr,
+        x="x",
+        y="y",
+        labels={"x": "Year", "y": "PESR"},
+        title="Policy Effect on Sex Ratio",
+    )
+    fig1.write_image(produces1)
+    fig2.write_image(produces2)
