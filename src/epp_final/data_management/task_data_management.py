@@ -6,6 +6,10 @@ import pytask
 from epp_final.config import BLD, SRC
 from epp_final.data_management.clean_data import clean_raw_data
 from epp_final.data_management.clean_data import clean_data
+from epp_final.data_management.clean_data import clean_wage_data
+from epp_final.data_management.clean_data import to_decimal
+from epp_final.data_management.clean_data import clean_fig1_data
+from epp_final.data_management.clean_data import clean_fig2_data
 from epp_final.utilities import read_yaml
 
 
@@ -23,3 +27,39 @@ def task_clean_data_1990(depends_on, produces):
     data = pd.read_csv(depends_on["data"])
     data = clean_raw_data(data, data_info)
     data.to_csv(produces, index=False)
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["clean_data.py"],
+        "data": SRC / "data" / "wage.xlsx"
+    }
+)
+@pytask.mark.produces(BLD/"python"/"data"/"wage_gap.csv")
+def task_clean_wage_data(depends_on,produces):
+    data=pd.read_excel(depends_on["data"],index_col=None)
+    data=clean_wage_data(data)
+    data.to_csv(produces,index=False)
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["clean_data.py"],
+        "data": SRC/"data"/"data1990.csv"
+    }
+)
+@pytask.mark.produces(BLD/"python"/"data"/"fig1_data.csv")
+def task_clean_fig1_data(depends_on,produces):
+    data=pd.read_csv(depends_on["data"])
+    data=clean_fig1_data(data)
+    data.to_csv(produces,index=False)
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["clean_data.py"],
+        "data": SRC/"data"/"data1990.csv"
+    }
+)
+@pytask.mark.produces(BLD/"python"/"data"/"fig2_data.csv")
+def task_clean_fig2_data(depends_on,produces):
+    data=pd.read_csv(depends_on["data"])
+    data=clean_fig2_data(data)
+    data.to_csv(produces,index=False)

@@ -6,6 +6,7 @@ import pytask
 from epp_final.analysis.model import load_model
 from epp_final.config import BLD
 from epp_final.final.plot import plot_results, plot_results_regional, reformat_data
+from epp_final.final.plot import plot_fig1, plot_fig2, plot_figqpp
 
 kwargs = {
     "produces": {
@@ -58,3 +59,30 @@ def task_plot_results_all(depends_on, produces):
     )
     fig3.write_image(produces["produces3"])
     fig4.write_image(produces["produces4"])
+
+kwargs2 = {
+    "produces": {
+        "produces1": BLD / "python" / "figures" / "fig1.png",
+        "produces2": BLD / "python" / "figures" / "fig2.png",
+        "produces3": BLD / "python" / "figures" / "fig_app.png",
+    },
+}
+@pytask.mark.depends_on(
+    {
+        "fig1_data": BLD / "python" / "data" / "fig1_data.csv",
+        "fig2_data": BLD / "python" / "data" / "fig2_data.csv",
+        "fig_app": BLD / "python" / "data" / "wage_gap.csv",
+    },
+)
+@pytask.mark.task(kwargs=kwargs2)
+def task_plot_fig(depends_on, produces):
+    """Plot sex ratio by birth year."""
+    fig1_data=pd.read_csv(depends_on["fig1_data"])
+    fig2_data=pd.read_csv(depends_on["fig2_data"])
+    figapp=pd.read_csv(depends_on["fig_app"])
+    fig1=plot_fig1(fig1_data)
+    fig2=plot_fig2(fig2_data)
+    figapp=plot_figqpp(figapp)
+    fig1.write_image(produces["produces1"])
+    fig2.write_image(produces["produces2"])
+    figapp.write_image(produces["produces3"])

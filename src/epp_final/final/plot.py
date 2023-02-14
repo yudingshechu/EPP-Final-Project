@@ -1,5 +1,6 @@
 """Functions plotting results."""
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 def reformat_data(data):
@@ -48,3 +49,31 @@ def plot_results_regional(df, label, title):
 
     """
     return px.line(df, x="x", y="y", labels=label, title=title, color="region")
+
+def plot_fig1(df):
+    y=df['CN1990A_SEX']
+    x=df['Year']
+    fig1=px.line( x = x ,
+                  y = y,
+                  title = 'Sex ratios by birth cohorts')
+    fig1=fig1.update_layout(
+        xaxis_title="Year", yaxis_title="Sex Ratio")
+    return fig1
+
+
+def plot_fig2(df):
+    fig2=go.Figure()
+    fig2.add_trace(go.Scatter(x=df['Year'],y=df['Han'],name='Han',mode='lines'))
+    fig2.add_trace(go.Scatter(x=df['Year'],y=df['Minorities'],name='Minorities',mode='lines'))
+    fig2=fig2.update_layout(
+        title="Sex ratios by Han and other minorities",xaxis_title="Year", yaxis_title="Sex Ratio",legend_title="Nation")
+    return fig2
+
+def plot_figqpp(df):
+    figapp=go.Figure()
+    figapp.add_trace(go.Scatter(x=df['year'],y=df['male'],mode='lines',name='Male wage'))
+    figapp.add_trace(go.Scatter(x=df['year'],y=df['female'],mode='lines',name='Female wage'))
+    figapp=figapp.update_layout(
+        title="Chinese urban gender wage gap 1988-2004",xaxis_title="Year", yaxis_title="Mean wage",legend_title="Gender")
+    return figapp
+                

@@ -1,5 +1,3 @@
-col0,col1,col2,col3
-yes,a,3.0,4
-no,a,4.5,2
-no,b,-1.0,3
-NaN,b,2.0,10
+version https://git-lfs.github.com/spec/v1
+oid sha256:57d12d2e02efdfba60a499b9b0129bda0ac2b22ebcbf144aee0d6bce83cfcfd5
+size 68
