@@ -8,6 +8,7 @@ import pytask
 from epp_final.analysis.predict import (
     data_processing,
     gen_plot_data,
+    gen_plot_data_control,
     rural_urban_dataframe,
     year_data_split,
 )
@@ -52,3 +53,39 @@ def task_urabn_rural_data(depends_on, produces):
         pickle.dump(dfa3_regional, f)
     with open(produces["produces2"], "wb") as f:
         pickle.dump(dfpesr_regional, f)
+
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["predict.py"],
+        "data": BLD / "python" / "data" / "Sample2.csv",
+    },
+)
+@pytask.mark.produces(
+    {"produces1": BLD / "python" / "models" / "dfa3_control.pickle"},
+)
+def task_data_with_control(depends_on, produces):
+    data = pd.read_csv(depends_on["data"])
+    year_data = year_data_split(data)
+    X_variables_c = data.columns[[2, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 3]]
+    dfa3_control = gen_plot_data_control(year_data, X_variables_c)
+    with open(produces["produces1"], "wb") as f:
+        pickle.dump(dfa3_control, f)
+
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["predict.py"],
+        "data": BLD / "python" / "data" / "Sample2.csv",
+    },
+)
+@pytask.mark.produces(
+    {"produces1": BLD / "python" / "models" / "dfa3_regional_control.pickle"},
+)
+def task_urabn_rural_control(depends_on, produces):
+    data = pd.read_csv(depends_on["data"])
+    year_data = year_data_split(data)
+    X_variables_c = data.columns[[2, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 3]]
+    dfa3_regional_c, dfpesr_regional_c = rural_urban_dataframe(year_data, X_variables_c)
+    with open(produces["produces1"], "wb") as f:
+        pickle.dump(dfa3_regional_c, f)

@@ -5,8 +5,14 @@ import pytask
 
 from epp_final.analysis.model import load_model
 from epp_final.config import BLD
-from epp_final.final.plot import plot_results, plot_results_regional, reformat_data
-from epp_final.final.plot import plot_fig1, plot_fig2, plot_figqpp
+from epp_final.final.plot import (
+    plot_fig1,
+    plot_fig2,
+    plot_figqpp,
+    plot_results,
+    plot_results_regional,
+    reformat_data,
+)
 
 kwargs = {
     "produces": {
@@ -14,6 +20,8 @@ kwargs = {
         "produces2": BLD / "python" / "figures" / "PESR.png",
         "produces3": BLD / "python" / "figures" / "A3_regional.png",
         "produces4": BLD / "python" / "figures" / "PESR_regional.png",
+        "produces5": BLD / "python" / "figures" / "A3_control.png",
+        "produces6": BLD / "python" / "figures" / "A3_regional_control.png",
     },
 }
 
@@ -23,6 +31,8 @@ kwargs = {
         "data": BLD / "python" / "models" / "coef1990.pickle",
         "dfa3_regional": BLD / "python" / "models" / "dfa3_regional.pickle",
         "dfpesr_regional": BLD / "python" / "models" / "dfpesr_regional.pickle",
+        "dfa3_control": BLD / "python" / "models" / "dfa3_control.pickle",
+        "dfa3_reg_control": BLD / "python" / "models" / "dfa3_regional_control.pickle",
     },
 )
 @pytask.mark.task(kwargs=kwargs)
@@ -59,6 +69,21 @@ def task_plot_results_all(depends_on, produces):
     )
     fig3.write_image(produces["produces3"])
     fig4.write_image(produces["produces4"])
+    dfa3_control = load_model(depends_on["dfa3_control"])
+    fig5 = plot_results(
+        dfa3_control,
+        {"x": "Year", "y": "alpha 3"},
+        "Policy Effect on Probability to be a male (with control)",
+    )
+    fig5.write_image(produces["produces5"])
+    dfa3_reg_control = load_model(depends_on["dfa3_reg_control"])
+    fig6 = plot_results_regional(
+        dfa3_reg_control,
+        {"x": "Year", "y": "alpha 3"},
+        "Policy Effect on Probability to be a male (with control)",
+    )
+    fig6.write_image(produces["produces6"])
+
 
 kwargs2 = {
     "produces": {
@@ -67,6 +92,8 @@ kwargs2 = {
         "produces3": BLD / "python" / "figures" / "fig_app.png",
     },
 }
+
+
 @pytask.mark.depends_on(
     {
         "fig1_data": BLD / "python" / "data" / "fig1_data.csv",
@@ -77,12 +104,12 @@ kwargs2 = {
 @pytask.mark.task(kwargs=kwargs2)
 def task_plot_fig(depends_on, produces):
     """Plot sex ratio by birth year."""
-    fig1_data=pd.read_csv(depends_on["fig1_data"])
-    fig2_data=pd.read_csv(depends_on["fig2_data"])
-    figapp=pd.read_csv(depends_on["fig_app"])
-    fig1=plot_fig1(fig1_data)
-    fig2=plot_fig2(fig2_data)
-    figapp=plot_figqpp(figapp)
+    fig1_data = pd.read_csv(depends_on["fig1_data"])
+    fig2_data = pd.read_csv(depends_on["fig2_data"])
+    figapp = pd.read_csv(depends_on["fig_app"])
+    fig1 = plot_fig1(fig1_data)
+    fig2 = plot_fig2(fig2_data)
+    figapp = plot_figqpp(figapp)
     fig1.write_image(produces["produces1"])
     fig2.write_image(produces["produces2"])
     figapp.write_image(produces["produces3"])

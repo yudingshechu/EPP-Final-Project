@@ -90,38 +90,71 @@ def gen_plot_data(data):
     return year_results_all
 
 
-def _rural_urban(choose, year_dict, year_data):
+def gen_plot_data_control(year_data_c, X_variables_c):
+    """Generate plot data with control.
+
+    Args:
+        year_data_c (dict): data split by year.
+        X_variables_c (string): X variables used
+
+    Returns:
+        pd.DataFrame: regression coefficients
+
+    """
+    year_results_all_c = {}
+    for i in range(980, 991):
+        workdf = year_data_c[f"Birth{i}"].copy()
+        Obs = workdf.shape[0]
+        Y = workdf["CN1990A_SEX"].values.reshape(Obs, 1)
+        X = workdf[X_variables_c].values
+        reg_all = LinearRegression().fit(X, Y)
+        a0 = reg_all.intercept_[0]
+        a1, a2, a3 = reg_all.coef_[0][[0, 1, 2]]
+        year_results_all_c[f"{i}"] = [a0, a1, a2, a3]
+    a3_all = []
+    for i in range(980, 991):
+        a3_all.append(year_results_all_c[f"{i}"][3])
+    x = list(range(1980, 1991))
+    dfa3 = pd.DataFrame({"x": x, "y": a3_all})
+    return dfa3
+
+
+def _rural_urban(choose, year_dict, year_data, X_variables):
     """Function only for rural and urban regressions.
 
     Args:
         choose (int): 0 for urban, 1 for rural
         year_dict (empty dictionary): results container
         year_data (dict): data for each year
+        X_variables(string): X variables used
 
     Returns:
         year_dictr: results
 
     """
-    X_variables = ["CN1990A_NATION", "Treat", "OneChildInteract"]
     for i in range(980, 991):
         region_bool = year_data[f"Birth{i}"]["CN1990A_HHTYA"] == choose
         workdf = year_data[f"Birth{i}"][region_bool].copy()
         Obs = workdf.shape[0]
         Y = workdf["CN1990A_SEX"].values.reshape(Obs, 1)
-        X = workdf[X_variables].values.reshape(Obs, 3)
+        X = workdf[X_variables].values
         reg_all = LinearRegression().fit(X, Y)
         a0 = reg_all.intercept_[0]
-        a1, a2, a3 = reg_all.coef_[0]
+        a1, a2, a3 = reg_all.coef_[0][[0, 1, 2]]
         Pesr = _PESR(a0, a1, a2, a3)
         year_dict[f"{i}"] = [a0, a1, a2, a3, Pesr]
     return year_dict
 
 
-def rural_urban_dataframe(year_data):
+def rural_urban_dataframe(
+    year_data,
+    X_variables=["CN1990A_NATION", "Treat", "OneChildInteract"],
+):
     """Store rural and urban data in two dataframes.
 
     Args:
         year_data (dict): data for each year
+        X_variables(string): X variables used
 
     Returns:
         pd.DataFrame: coefficients with labels for plotting
@@ -129,8 +162,8 @@ def rural_urban_dataframe(year_data):
     """
     year_results_rural = {}
     year_results_urban = {}
-    year_results_rural = _rural_urban(1, year_results_rural, year_data)
-    year_results_urban = _rural_urban(0, year_results_urban, year_data)
+    year_results_rural = _rural_urban(1, year_results_rural, year_data, X_variables)
+    year_results_urban = _rural_urban(0, year_results_urban, year_data, X_variables)
     Pesr_rural = []
     a3_rural = []
     Pesr_urban = []
