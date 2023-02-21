@@ -22,6 +22,7 @@ kwargs = {
         "produces4": BLD / "python" / "figures" / "PESR_regional.png",
         "produces5": BLD / "python" / "figures" / "A3_control.png",
         "produces6": BLD / "python" / "figures" / "A3_regional_control.png",
+        "produces7": BLD / "python" / "figures" / "PESR_regional_control.png",
     },
 }
 
@@ -33,6 +34,10 @@ kwargs = {
         "dfpesr_regional": BLD / "python" / "models" / "dfpesr_regional.pickle",
         "dfa3_control": BLD / "python" / "models" / "dfa3_control.pickle",
         "dfa3_reg_control": BLD / "python" / "models" / "dfa3_regional_control.pickle",
+        "dfapesr_reg_control": BLD
+        / "python"
+        / "models"
+        / "dfpesr_regional_control.pickle",
     },
 )
 @pytask.mark.task(kwargs=kwargs)
@@ -83,6 +88,13 @@ def task_plot_results_all(depends_on, produces):
         "Policy Effect on Probability to be a male (with control)",
     )
     fig6.write_image(produces["produces6"])
+    dfpesr_reg_control = load_model(depends_on["dfapesr_reg_control"])
+    fig7 = plot_results_regional(
+        dfpesr_reg_control,
+        {"x": "Year", "y": "alpha 3"},
+        "Policy Effect on Sex Ratio (with control)",
+    )
+    fig7.write_image(produces["produces7"])
 
 
 kwargs2 = {
