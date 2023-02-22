@@ -32,7 +32,12 @@ This repository is created for the course *Effective Programming Practices for E
 There are 56 ethic groups in China. Over 91.11% of the population are Han and the rest is considered ethnic minorities. The one-child policy is launched in 1979 and only applied to the Han Chinese but not to the minorities. \
 In this paper, the ethnic minorities are treated as the control group, and the Han Chinese as the treatment group. The authors contributed to identify the causal effect of the one-child policy on the increase in sex ratio in China by a difference in difference (DD) estimator using 1990 census, 2000 census and 2005 mini-census data. We only found the 1990 and 2000 1% sampled census data and the data is still very big. Therefore, the DD estimation conducted in this project only use 1990 0.5% sampled census.
 
-Avg prob of being a boy | Han | Minority
+Avg prob of boy | Han | Minority
+--- | --- | ---
+Born before 1979 | $E(S_i|H=1,T=0)$| $E(S_i|H=0,T=0)$
+Born after 1979 | $E(S_i|H=1,T=1)$ | $E(S_i|H=0,T=1)$
+
+Table | Han | Minority
 --- | --- | ---
 Born before 1979 | $E(S_i|H=1,T=0)$ | $E(S_i|H=0,T=0)$
 Born after 1979 | $E(S_i|H=1,T=1)$ | $E(S_i|H=0,T=1)$
