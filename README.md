@@ -61,4 +61,5 @@ $POCP=\frac{PESR}{\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_
 
 ### References
 ****Minnesota Population Center. Integrated Public Use Microdata Series, International: Version 7.3 [dataset]. Minneapolis, MN: IPUMS, 2020.**** [IPUMS](https://doi.org/10.18128/D020.V7.3)
+
 ****Li, H., Yi, J., & Zhang, J. (2011). Estimating the effect of the one-child policy on the sex ratio imbalance in China: Identification based on the difference-in-differences. Demography, 48(4), 1535-1557.****
