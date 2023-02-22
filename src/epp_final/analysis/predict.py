@@ -38,7 +38,7 @@ def _PESR(a0, a1, a2, a3):
         a3 (float): One child policy on Han after 1979
 
     Returns:
-        PES: policy effect on sex ratio
+        float: policy effect on sex ratio
 
     """
     PES = 100 * (
@@ -72,7 +72,7 @@ def gen_plot_data(data):
         data (dict): data split by year.
 
     Returns:
-        dict: regression coefficients
+        dict: regression coefficients(value) by year(key)
 
     """
     X_variables = ["CN1990A_NATION", "Treat", "OneChildInteract"]
@@ -129,7 +129,7 @@ def _rural_urban(choose, year_dict, year_data, X_variables):
         X_variables(string): X variables used
 
     Returns:
-        year_dictr: results
+        dict: results
 
     """
     for i in range(980, 991):

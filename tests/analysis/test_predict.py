@@ -1,46 +1,59 @@
 """Tests for the prediction model."""
-
 import pandas as pd
 import pytest
-from pandas.testing import assert_frame_equal
-from epp_final.analysis.predict import predict_prob_by_age
+from epp_final.analysis.predict import (
+    _PESR,
+    data_processing,
+    gen_plot_data,
+    gen_plot_data_control,
+    rural_urban_dataframe,
+    year_data_split,
+)
+from epp_final.config import TEST_DIR
 
 
 @pytest.fixture()
 def data():
-    out = pd.DataFrame([1, 2, 3], columns=["age"])
-    out["education"] = ["high-school", "high-school", "university"]
-    out["income"] = ["high", "low", "low"]
+    data1990 = pd.read_csv(TEST_DIR / "analysis" / "data1990_raw_test.csv")
+    sample2 = pd.read_csv(TEST_DIR / "analysis" / "Sample2_test.csv")
+    out = {"data1990": data1990, "sample2": sample2}
     return out
 
 
-@pytest.fixture()
-def model():
-    class ModelClass:
-        @staticmethod
-        def predict(data):
-            if "high-school" in data["education"].to_numpy():
-                prob = 0.1 if "low" in data["income"].to_numpy() else 0.2
-            else:
-                prob = 0.3 if "low" in data["income"].to_numpy() else 0.4
-            return prob * data["age"]
-
-    return ModelClass
+def test_year_data_split(data):
+    data_p = data_processing(data["data1990"])
+    year_data = year_data_split(data_p)
+    for i in range(980, 991):
+        assert sum(year_data[f"Birth{i}"]["CN1990A_BIRTHY"] == (i + 1)) == 0
 
 
-@pytest.mark.parametrize("group", ["education", "income"])
-def test_predict_prob_over_age(data, model, group):
-    got = predict_prob_by_age(data, model, group)
+def test_PESR():
+    a0 = 0.2
+    a1 = 0.3
+    a2 = 0.4
+    a3 = 0.5
+    assert _PESR(a0, a1, a2, a3) == -23 / 4 * 100
 
-    if group == "education":
-        expected = pd.DataFrame(
-            [[1, 0.1, 0.3], [2, 0.2, 0.6], [3, 0.3, 0.9]],
-            columns=["age", "high-school", "university"],
-        )
-    else:
-        expected = pd.DataFrame(
-            [[1, 0.2, 0.1], [2, 0.4, 0.2], [3, 0.6, 0.3]],
-            columns=["age", "high", "low"],
-        )
 
-    assert_frame_equal(got, expected)
+def test_gen_coefficient(data):
+    data_p = data_processing(data["data1990"])
+    year_data = year_data_split(data_p)
+    coef = gen_plot_data(year_data)
+    for i in range(980, 991):
+        a0, a1, a2, a3, PESr = coef[f"{i}"]
+        assert _PESR(a0, a1, a2, a3) == PESr
+
+
+def test_regional_data_shape_name(data):
+    data_p = data_processing(data["data1990"])
+    year_data = year_data_split(data_p)
+    dfa3_regional, dfpesr_regional = rural_urban_dataframe(year_data)
+    assert dfa3_regional.shape == dfpesr_regional.shape
+    assert dfa3_regional.columns[2] == dfpesr_regional.columns[2]
+
+
+def test_only_with_control(data):
+    year_data = year_data_split(data["sample2"])
+    X_variables_c = data["sample2"].columns[[2, 8, 9, 11, 12, 13, 15, 16, 17, 3]]
+    dfa3_control = gen_plot_data_control(year_data, X_variables_c)
+    assert dfa3_control.shape[0] == 11

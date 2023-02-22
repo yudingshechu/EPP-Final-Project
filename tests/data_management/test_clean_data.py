@@ -1,50 +1,54 @@
 import numpy as np
 import pandas as pd
 import pytest
+from epp_final.analysis.predict import data_processing
 from epp_final.config import TEST_DIR
-from epp_final.data_management import clean_data
-from epp_final.utilities import read_yaml
+from epp_final.data_management import clean_data_with_control
 
 
 @pytest.fixture()
 def data():
-    return pd.read_csv(TEST_DIR / "data_management" / "data_fixture.csv")
+    return pd.read_csv(TEST_DIR / "data_management" / "data1990_raw_test.csv")
 
 
-@pytest.fixture()
-def data_info():
-    return read_yaml(TEST_DIR / "data_management" / "data_info_fixture.yaml")
+def test_only_child_left(data):
+    working_data = clean_data_with_control(data)
+    assert sum(working_data["CN1990A_RELATE"] != 3) == 0
 
 
-def test_clean_data_drop_columns(data, data_info):
-    data_clean = clean_data(data, data_info)
-    assert not set(data_info["columns_to_drop"]).intersection(set(data_clean.columns))
+def test_two_parents(data):
+    working_data = clean_data_with_control(data)
+    assert (
+        sum(np.sum(working_data.iloc[:, [10, 11, 12, 13, 14, 15, 16, 17]], axis=1) != 2)
+        == 0
+    )
 
 
-def test_clean_data_dropna(data, data_info):
-    data_clean = clean_data(data, data_info)
-    assert not data_clean.isna().any(axis=None)
+def test_18_columns(data):
+    working_data = clean_data_with_control(data)
+    assert working_data.shape[1] == 18
 
 
-def test_clean_data_categorical_columns(data, data_info):
-    data_clean = clean_data(data, data_info)
-    for cat_col in data_info["categorical_columns"]:
-        cat_col = data_info["column_rename_mapping"].get(cat_col, cat_col)
-        assert data_clean[cat_col].dtype == "category"
+def test_year_after_1973(data):
+    working_data = clean_data_with_control(data)
+    assert working_data[working_data["CN1990A_BIRTHY"] < 973].shape[0] == 0
 
 
-def test_clean_data_column_rename(data, data_info):
-    data_clean = clean_data(data, data_info)
-    old_names = set(data_info["column_rename_mapping"].keys())
-    new_names = set(data_info["column_rename_mapping"].values())
-    assert not old_names.intersection(set(data_clean.columns))
-    assert new_names.intersection(set(data_clean.columns)) == new_names
+def test_interact(data):
+    data_p = data_processing(data)
+    assert (
+        sum(data_p["OneChildInteract"] != data_p["Treat"] * data_p["CN1990A_NATION"])
+        == 0
+    )
 
 
-def test_convert_outcome_to_numerical(data, data_info):
-    data_clean = clean_data(data, data_info)
-    outcome_name = data_info["outcome"]
-    outcome_numerical_name = data_info["outcome_numerical"]
-    assert outcome_numerical_name in data_clean.columns
-    assert data_clean[outcome_name].dtype == "category"
-    assert data_clean[outcome_numerical_name].dtype == np.int8
+def test_after_year_1973(data):
+    data_p = data_processing(data)
+    assert data_p[data_p["CN1990A_BIRTHY"] < 973].shape[0] == 0
+
+
+def test_treatment(data):
+    data_p = data_processing(data)
+    after_1979 = sum(data_p["CN1990A_BIRTHY"] > 979)
+    treated = sum(data_p["Treat"])
+    assert after_1979 == treated

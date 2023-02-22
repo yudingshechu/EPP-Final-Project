@@ -23,7 +23,7 @@ from epp_final.config import BLD
 )
 @pytask.mark.produces(BLD / "python" / "models" / "coef1990.pickle")
 def task_fit_model_1990(depends_on, produces):
-    """Fit a linear regression model (Python version)."""
+    """Fit a linear regression model (without controls and regional split)."""
     data = pd.read_csv(depends_on["data"])
     dataprocessed = data_processing(data)
     year_data = year_data_split(dataprocessed)
@@ -45,6 +45,7 @@ def task_fit_model_1990(depends_on, produces):
     },
 )
 def task_urabn_rural_data(depends_on, produces):
+    """Fit regression model for rural and urban regions separately."""
     data = pd.read_csv(depends_on["data"])
     dataprocessed = data_processing(data)
     year_data = year_data_split(dataprocessed)
@@ -65,6 +66,7 @@ def task_urabn_rural_data(depends_on, produces):
     {"produces1": BLD / "python" / "models" / "dfa3_control.pickle"},
 )
 def task_data_with_control(depends_on, produces):
+    """Fit a regression model with educational controls."""
     data = pd.read_csv(depends_on["data"])
     year_data = year_data_split(data)
     X_variables_c = data.columns[[2, 8, 9, 11, 12, 13, 15, 16, 17, 3]]
@@ -86,6 +88,7 @@ def task_data_with_control(depends_on, produces):
     },
 )
 def task_urabn_rural_control(depends_on, produces):
+    """Fit regression model with educational controls for rural and urban."""
     data = pd.read_csv(depends_on["data"])
     year_data = year_data_split(data)
     X_variables_c = data.columns[[2, 8, 9, 11, 12, 13, 15, 16, 17, 3]]
