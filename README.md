@@ -30,16 +30,16 @@ This repository is created for the course *Effective Programming Practices for E
 
 ### Replication of Li, H., Yi, J., & Zhang, J. (2011)
 There are 56 ethic groups in China. Over 91.11% of the population are Han and the rest is considered ethnic minorities. The one-child policy is launched in 1979 and only applied to the Han Chinese but not to the minorities. \
-In this paper, the ethnic minorities are treated as the control group, and the Han Chinese as the treatment group. The authors contributed to identify the causal effect of the one-child policy on the increase in sex ratio in China by a difference in difference (DD) estimator using 1990 census, 2000 census and 2005 mini-census data. We only found the 1990 and 2000 1% sampled census data and the data is still very big. Therefore, the DD estimation conducted in this project only use 1990 0.5% sampled census.\
+In this paper, the ethnic minorities are treated as the control group, and the Han Chinese as the treatment group. The authors contributed to identify the causal effect of the one-child policy on the increase in sex ratio in China by a difference in difference (DD) estimator using 1990 census, 2000 census and 2005 mini-census data. We only found the 1990 and 2000 1% sampled census data and the data is still very big. Therefore, the DD estimation conducted in this project only use 1990 0.5% sampled census.
 
 Table | Han | Minority
 --- | --- | ---
 Born before 1979 | $E(S_i|H=1,T=0)$ | $E(S_i|H=0,T=0)$
 Born after 1979 | $E(S_i|H=1,T=1)$ | $E(S_i|H=0,T=1)$
 
-* $S_i$ is a child's gender status: $S_i=1$ if the child is a boy, otherwise $S_i=0$;\
-* $H$ is the ethnic indicator: $H=1$ if the child is Han Chinese, otherwise $H=0$;\
-* $T$ is the birth cohort indicator: $T=1$ if the child was born after 1979, otherwise $T=0$.\
+* $S_i$ is a child's gender status: $S_i=1$ if the child is a boy, otherwise $S_i=0$;
+* $H$ is the ethnic indicator: $H=1$ if the child is Han Chinese, otherwise $H=0$;
+* $T$ is the birth cohort indicator: $T=1$ if the child was born after 1979, otherwise $T=0$.
 * $DD=[E(S_i|H=1,T=1)-E(S_i|H=1,T=0)]-[E(S_i|H=0,T=1)-E(S_i|H=0,T=0)]$
 * The regression-adjusted DD model is:
 $S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 (H_i*T_i)+\epsilon_i$
