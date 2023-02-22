@@ -53,13 +53,13 @@ before 1979 | $\frac{\alpha_0+\alpha_1}{1-(\alpha_0+\alpha_1)}$ | $\frac{\alpha_
 after 1979 | $\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_1+\alpha_2+\alpha_3)}$ | $\frac{\alpha_0+\alpha_2}{1-(\alpha_0+\alpha_2)}$
 
 * The policy effect on sex ratio (PESR) can be calculated as: 
-$PESR=100*\langle\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_1+\alpha_2+\alpha_3)}-\frac{\alpha_0+\alpha_1}{1-(\alpha_0+\alpha_1)}\rangle-\langle\frac{\alpha_0+\alpha_2}{1-(\alpha_0+\alpha_2)}-\frac{\alpha_0}{1-\alpha_0}\rangle$
+$PESR=100*\langle(\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_1+\alpha_2+\alpha_3)}-\frac{\alpha_0+\alpha_1}{1-(\alpha_0+\alpha_1)})-(\frac{\alpha_0+\alpha_2}{1-(\alpha_0+\alpha_2)}-\frac{\alpha_0}{1-\alpha_0})\rangle$
 * The percentage of the increase in sex ratios due to one-child policy (POCP) for the Han Chinese is:
 $POCP=\frac{PESR}{\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_1+\alpha_2+\alpha_3)}-\frac{\alpha_0+\alpha_1}{1-(\alpha_0+\alpha_1)}}$
 
-### Interpretation of Figures
-
 ### Interpretation of Cleaned Data
+
+### Interpretation of Figures
 
 ### References
 ****Minnesota Population Center. Integrated Public Use Microdata Series, International: Version 7.3 [dataset]. Minneapolis, MN: IPUMS, 2020.**** [IPUMS data link](https://doi.org/10.18128/D020.V7.3)
