@@ -35,26 +35,35 @@ def task_clean_data_1990(depends_on, produces):
 )
 @pytask.mark.produces(BLD / "python" / "data" / "wage_gap.csv")
 def task_clean_wage_data(depends_on, produces):
+    """Creat the wage gap data."""
     data = pd.read_excel(depends_on["data"], index_col=None)
     data = clean_wage_data(data)
     data.to_csv(produces, index=False)
 
 
 @pytask.mark.depends_on(
-    {"scripts": ["clean_data.py"], "data": BLD/ "python" / "data" / "data1990_raw.csv"},
+    {
+        "scripts": ["clean_data.py"],
+        "data": BLD / "python" / "data" / "data1990_raw.csv",
+    },
 )
 @pytask.mark.produces(BLD / "python" / "data" / "fig1_data.csv")
 def task_clean_fig1_data(depends_on, produces):
+    """Generate fig1 data."""
     data = pd.read_csv(depends_on["data"])
     data = clean_fig1_data(data)
     data.to_csv(produces, index=False)
 
 
 @pytask.mark.depends_on(
-    {"scripts": ["clean_data.py"], "data": BLD / "python" / "data" / "data1990_raw.csv"},
+    {
+        "scripts": ["clean_data.py"],
+        "data": BLD / "python" / "data" / "data1990_raw.csv",
+    },
 )
 @pytask.mark.produces(BLD / "python" / "data" / "fig2_data.csv")
 def task_clean_fig2_data(depends_on, produces):
+    """Generate fig2 data."""
     data = pd.read_csv(depends_on["data"])
     data = clean_fig2_data(data)
     data.to_csv(produces, index=False)

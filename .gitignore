@@ -4,6 +4,7 @@
 *.pyc
 *__pycache__
 .mypy_cache
+.vscode
 
 # pytask
 .pytask.sqlite3

@@ -23,6 +23,15 @@ def clean_raw_data(data, data_info):
 
 
 def _to_decimal(x):
+    """Change the unit of x.
+
+    Args:
+        x (float): x
+
+    Returns:
+        float: x/1000
+
+    """
     return x / 1000
 
 
