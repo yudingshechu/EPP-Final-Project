@@ -41,7 +41,7 @@ def task_clean_wage_data(depends_on, produces):
 
 
 @pytask.mark.depends_on(
-    {"scripts": ["clean_data.py"], "data": SRC / "data" / "data1990.csv"},
+    {"scripts": ["clean_data.py"], "data": BLD/ "python" / "data" / "data1990_raw.csv"},
 )
 @pytask.mark.produces(BLD / "python" / "data" / "fig1_data.csv")
 def task_clean_fig1_data(depends_on, produces):
@@ -51,7 +51,7 @@ def task_clean_fig1_data(depends_on, produces):
 
 
 @pytask.mark.depends_on(
-    {"scripts": ["clean_data.py"], "data": SRC / "data" / "data1990.csv"},
+    {"scripts": ["clean_data.py"], "data": BLD / "python" / "data" / "data1990_raw.csv"},
 )
 @pytask.mark.produces(BLD / "python" / "data" / "fig2_data.csv")
 def task_clean_fig2_data(depends_on, produces):
