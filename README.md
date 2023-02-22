@@ -30,7 +30,7 @@ This repository is created for the course *Effective Programming Practices for E
 
 ### Replication of Li, H., Yi, J., & Zhang, J. (2011)
 There are 56 ethic groups in China. Over 91.11% of the population are Han and the rest is considered ethnic minorities. The one-child policy is launched in 1979 and only applied to the Han Chinese but not to the minorities. \
-In this paper, the ethnic minorities are treated as the control group, and the Han Chinese as the treatment group. The authors contributed to identify the causal effect of the one-child policy on the increase in sex ratio in China by a difference in difference (DD) estimator using 1990 census, 2000 census and 2005 mini-census data. We only found the 1990 and 2000 1% sampled census data and the data is still very big. Therefore, the DD estimation conducted in this project only use 1990 0.5% sampled census.
+In this paper, the ethnic minorities are treated as the control group, and the Han Chinese as the treatment group. The authors contributed to identify the causal effect of the one-child policy on the increase in sex ratio in China by a difference in difference (DD) estimator using 1990 census, 2000 census and 2005 mini-census data. We only found the 1990 and 2000 1% sampled census data and the data is still very big. Therefore, the DD estimation conducted in this project only use [1990 0.05% sampled census data](https://international.ipums.org/international-action/sample_details/country/cn#tab_cn1990a).
 
 Avg prob of being a boy | Han | Minority
 --- | --- | ---
@@ -59,3 +59,6 @@ $POCP=\frac{PESR}{\frac{\alpha_0+\alpha_1+\alpha_2+\alpha_3}{1-(\alpha_0+\alpha_
 
 ### Interpretation of Figures
 
+### References
+****Minnesota Population Center. Integrated Public Use Microdata Series, International: Version 7.3 [dataset]. Minneapolis, MN: IPUMS, 2020.**** [IPUMS](https://doi.org/10.18128/D020.V7.3)
+****Li, H., Yi, J., & Zhang, J. (2011). Estimating the effect of the one-child policy on the sex ratio imbalance in China: Identification based on the difference-in-differences. Demography, 48(4), 1535-1557.****
