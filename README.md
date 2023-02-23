@@ -67,16 +67,16 @@ From 1979 until 2015, Chinese citizens were gernerally permiited to have only on
 * in 1984, a married couple with non-agricultural Hukou(urban) are allowed to have two children if both of them were the only child in their family, namely the two-child policy. 
 * *Hukou is a system of household registration used in mainland China. Each citizen was classified in an agricultural or non-agricultural Hukou(commonly referred to as rural or urban)*
 
- This unique affirmative two-child policy allows us to estimate the effect of the two-child policy on the increase in sex ratio in China by a triple Diff-in-Diff method (DDD) estimator using 1990 census data. We set the Chinese citizens with non-ag Hukou as treatment group and the Chinese citizens with ag Hukou as control group. The treatment group introduces the two-child policy in 1984, while the control group does not have such a strongly limiting policy. Furthermore, the population of each group can be subdivided into two groups, the Han Chinese and ethnic minorities Chinese.Therefore, we have eight groups:
+ This unique affirmative two-child policy allows us to estimate the effect of the two-child policy on the increase in sex ratio in China by a triple Diff-in-Diff method (DDD) estimator using 1990 census data. The period included in this estimation is from 1980 to 1990. We set the Chinese citizens with non-ag Hukou as treatment group and the Chinese citizens with ag Hukou as control group. The treatment group introduces the two-child policy in 1984, while the control group does not have such a strongly limiting policy. Furthermore, the population of each group can be subdivided into two groups, the Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
 
 Avg prob of being a boy | Han with non-ag Hukou | Minority with non-ag Hukou | Han with ag Hukou | Minority with ag Hukou
 --- | --- | --- | --- | --- 
-Born before 1979 | $E(S_i\|H=1,Ag=0,T=0)$ | $E(S_i\|H=0,Ag=0,T=0)$ | $E(S_i\|H=1,Ag=1,T=0)$ | $E(S_i\|H=0,Ag=1,T=0)$ 
-Born after 1979 | $E(S_i\|H=1,Ag=0,T=1)$ | $E(S_i\|H=0,Ag=0,T=1)$ | $E(S_i\|H=1,Ag=1,T=1)$ | $E(S_i\|H=0,Ag=1,T=1)$  
+Born between 1979 and 1984 | $E(S_i\|H=1,Ag=0,T=0)$ | $E(S_i\|H=0,Ag=0,T=0)$ | $E(S_i\|H=1,Ag=1,T=0)$ | $E(S_i\|H=0,Ag=1,T=0)$ 
+Born after 1984 | $E(S_i\|H=1,Ag=0,T=1)$ | $E(S_i\|H=0,Ag=0,T=1)$ | $E(S_i\|H=1,Ag=1,T=1)$ | $E(S_i\|H=0,Ag=1,T=1)$  
 
 * $S_i$ is a child's gender status: $S_i=1$ if the child is a boy, otherwise $S_i=0$;
 * $H$ is the ethnic indicator: $H=1$ if the child is Han Chinese, otherwise $H=0$;
-* $T$ is the birth cohort indicator: $T=1$ if the child was born after 1979, otherwise $T=0$;
+* $T$ is the birth cohort indicator: $T=1$ if the child was born after 1984, $T=0$ if the child was born before 1984 but after 1979;
 * $Ag$ is the Hukou indicator: $Ag=1$ if the child was born in a household with agricultural Hukou, otherwise $Ag=0$.
 * $DDD=\bigg[\bigg(E(S_i|H=1,Ag=0,T=1)-E(S_i|H=1,Ag=0,T=0)\bigg)$  $-\bigg(E(S_i|H=0,Ag=0,T=1)-E(S_i|H=0,Ag=0,T=0)\bigg)\bigg]$  $-\bigg[\bigg(E(S_i|H=1,Ag=1,T=1)-E(S_i|H=1,Ag=1,T=0)\bigg)$  $-\bigg(E(S_i|H=0,Ag=1,T=1)-E(S_i|H=0,Ag=1,T=0)\bigg)\bigg]$
 * The regression-adjusted DDD model is: 
