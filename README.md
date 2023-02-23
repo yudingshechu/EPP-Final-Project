@@ -71,18 +71,18 @@ From 1979 until 2015, Chinese citizens were gernerally permiited to have only on
 
 Avg prob of being a boy | Han with non-ag Hukou | Minority with non-ag Hukou | Han with ag Hukou | Minority with ag Hukou
 --- | --- | --- | --- | --- 
-Born between 1979 and 1984 | $E(S_i\|H=1,Ag=0,T=0)$ | $E(S_i\|H=0,Ag=0,T=0)$ | $E(S_i\|H=1,Ag=1,T=0)$ | $E(S_i\|H=0,Ag=1,T=0)$ 
-Born after 1984 | $E(S_i\|H=1,Ag=0,T=1)$ | $E(S_i\|H=0,Ag=0,T=1)$ | $E(S_i\|H=1,Ag=1,T=1)$ | $E(S_i\|H=0,Ag=1,T=1)$  
+Born between 1979 and 1984 | $E(S_i\|H=1,K=1,T=0)$ | $E(S_i\|H=0,K=1,T=0)$ | $E(S_i\|H=1,K=0,T=0)$ | $E(S_i\|H=0,K=0,T=0)$ 
+Born after 1984 | $E(S_i\|H=1,K=1,T=1)$ | $E(S_i\|H=0,K=1,T=1)$ | $E(S_i\|H=1,K=0,T=1)$ | $E(S_i\|H=0,K=0,T=1)$  
 
 * $S_i$ is a child's gender status: $S_i=1$ if the child is a boy, otherwise $S_i=0$;
 * $H$ is the ethnic indicator: $H=1$ if the child is Han Chinese, otherwise $H=0$;
 * $T$ is the birth cohort indicator: $T=1$ if the child was born after 1984, $T=0$ if the child was born before 1984 but after 1979;
-* $Ag$ is the Hukou indicator: $Ag=1$ if the child was born in a household with agricultural Hukou, otherwise $Ag=0$.
-* $DDD=\bigg[\bigg(E(S_i|H=1,Ag=0,T=1)-E(S_i|H=1,Ag=0,T=0)\bigg)$  $-\bigg(E(S_i|H=0,Ag=0,T=1)-E(S_i|H=0,Ag=0,T=0)\bigg)\bigg]$  $-\bigg[\bigg(E(S_i|H=1,Ag=1,T=1)-E(S_i|H=1,Ag=1,T=0)\bigg)$  $-\bigg(E(S_i|H=0,Ag=1,T=1)-E(S_i|H=0,Ag=1,T=0)\bigg)\bigg]$
+* $K$ is the Hukou indicator: $K=1$ if the child was born in a household with non-agricultural Hukou, otherwise $K=0$.
+* $DDD=\bigg[\bigg(E(S_i|H=1,K=1,T=1)-E(S_i|H=1,K=1,T=0)\bigg)$  $-\bigg(E(S_i|H=0,K=1,T=1)-E(S_i|H=0,K=1,T=0)\bigg)\bigg]$  $-\bigg[\bigg(E(S_i|H=1,K=0,T=1)-E(S_i|H=1,K=0,T=0)\bigg)$  $-\bigg(E(S_i|H=0,K=0,T=1)-E(S_i|H=0,K=0,T=0)\bigg)\bigg]$
 * The regression-adjusted DDD model is: 
-$S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 Ag_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * Ag_i)+\alpha_6 (T_i * Ag_i)+\alpha_7 (H_i * T_i * Ag_i)+\epsilon_i$;
+$S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 K_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * K_i)+\alpha_6 (T_i * K_i)+\alpha_7 (H_i * T_i * K_i)+\epsilon_i$;
 * Using the regression framework, control for the child's parents education level: 
-$S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 Ag_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * Ag_i)+\alpha_6 (T_i * Ag_i)+\alpha_7 (H_i * T_i * Ag_i)+X*\beta+\epsilon_i$;
+$S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 K_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * K_i)+\alpha_6 (T_i * K_i)+\alpha_7 (H_i * T_i * K_i)+X*\beta+\epsilon_i$;
 * $\alpha_7$ is identical to $DDD$.
 
 ## Interpretation of Cleaned Data
