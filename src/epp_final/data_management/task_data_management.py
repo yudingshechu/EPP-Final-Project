@@ -5,6 +5,7 @@ import pytask
 
 from epp_final.config import BLD, SRC
 from epp_final.data_management.clean_data import (
+    clean_data_3did,
     clean_data_with_control,
     clean_fig1_data,
     clean_fig2_data,
@@ -80,4 +81,18 @@ def task_clean_data_with_control(depends_on, produces):
     """Create sample 2 data (Python version)."""
     data = pd.read_csv(depends_on["data"])
     data = clean_data_with_control(data)
+    data.to_csv(produces, index=False)
+
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["clean_data.py"],
+        "data": BLD / "python" / "data" / "data1990_raw.csv",
+    },
+)
+@pytask.mark.produces(BLD / "python" / "data" / "triple_did.csv")
+def task_clean_data_3did(depends_on, produces):
+    """Create triple did data (Python version)."""
+    data = pd.read_csv(depends_on["data"])
+    data = clean_data_3did(data)
     data.to_csv(produces, index=False)

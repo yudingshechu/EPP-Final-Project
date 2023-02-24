@@ -8,9 +8,11 @@ import pytask
 from epp_final.analysis.predict import (
     data_processing,
     gen_plot_data,
+    gen_plot_data3,
     gen_plot_data_control,
     rural_urban_dataframe,
     year_data_split,
+    year_data_split3,
 )
 from epp_final.config import BLD
 
@@ -97,3 +99,19 @@ def task_urabn_rural_control(depends_on, produces):
         pickle.dump(dfa3_regional_c, f)
     with open(produces["produces2"], "wb") as f:
         pickle.dump(dfpesr_regional_c, f)
+
+
+@pytask.mark.depends_on(
+    {
+        "scripts": ["predict.py"],
+        "data": BLD / "python" / "data" / "triple_did.csv",
+    },
+)
+@pytask.mark.produces(BLD / "python" / "models" / "coef_triple_did.pickle")
+def task_fit_model_triple_did(depends_on, produces):
+    """Fit a linear regression model (triple did)."""
+    data = pd.read_csv(depends_on["data"])
+    year_data = year_data_split3(data)
+    coef = gen_plot_data3(year_data)
+    with open(produces, "wb") as f:
+        pickle.dump(coef, f)

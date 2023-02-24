@@ -250,3 +250,40 @@ def clean_data_with_control(data1990_no2000):
         inplace=True,
     )
     return working_data
+
+
+def clean_data_3did(data1990_no2000):
+    """Create the cleaned data for triple diff-in-diff.
+
+    Args:
+        data1990_no2000 (pd.DataFrame): 1990 raw data.
+
+    Returns:
+        pd.DataFrame: data for triple did estimation.
+
+    """
+    data1990_no2000["CN1990A_SEX"].replace({2: 0}, inplace=True)
+    data1990_no2000["CN1990A_NATION"].replace(list(range(2, 100)), 0, inplace=True)
+    data1990_no2000["CN1990A_HHTYA"].replace({1: 0}, inplace=True)
+    data1990_no2000["CN1990A_HHTYA"].replace([2, 9], 1, inplace=True)
+    data1990_no2000.drop(
+        data1990_no2000[data1990_no2000["CN1990A_BIRTHY"] < 980].index,
+        inplace=True,
+    )
+    data1990_no2000.reset_index(drop=True, inplace=True)
+    data1990_no2000["Treat"] = np.zeros(data1990_no2000.shape[0], dtype="int")
+    data1990_no2000.loc[data1990_no2000["CN1990A_BIRTHY"] > 984, "Treat"] = 1
+    data1990_no2000["H*T"] = (
+        data1990_no2000["CN1990A_NATION"] * data1990_no2000["Treat"]
+    )
+    data1990_no2000["H*K"] = (
+        data1990_no2000["CN1990A_NATION"] * data1990_no2000["CN1990A_HHTYA"]
+    )
+    data1990_no2000["K*T"] = data1990_no2000["CN1990A_HHTYA"] * data1990_no2000["Treat"]
+    data1990_no2000["H*K*T"] = (
+        data1990_no2000["CN1990A_NATION"]
+        * data1990_no2000["CN1990A_HHTYA"]
+        * data1990_no2000["Treat"]
+    )
+
+    return data1990_no2000

@@ -92,7 +92,7 @@ def plot_fig2(df):
     return fig2
 
 
-def plot_figqpp(df):
+def plot_figapp(df):
     """Plot figure for male female wage gap.
 
     Args:
@@ -116,3 +116,21 @@ def plot_figqpp(df):
         legend_title="Gender",
     )
     return figapp
+
+
+def plot_data_3did(data):
+    """Reformat data into separated lists.
+
+    Args:
+        data (dict): regression coefficients
+
+    Returns:
+        list: list of coefficients for different years.
+
+    """
+    Pesr3_all = []
+    a7_all = []
+    for i in range(985, 991):
+        Pesr3_all.append(data[f"{i}"][8])
+        a7_all.append(data[f"{i}"][7])
+    return a7_all, Pesr3_all

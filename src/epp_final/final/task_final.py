@@ -6,9 +6,10 @@ import pytask
 from epp_final.analysis.model import load_model
 from epp_final.config import BLD
 from epp_final.final.plot import (
+    plot_data_3did,
     plot_fig1,
     plot_fig2,
-    plot_figqpp,
+    plot_figapp,
     plot_results,
     plot_results_regional,
     reformat_data,
@@ -51,12 +52,12 @@ def task_plot_results_all(depends_on, produces):
     fig1 = plot_results(
         dfa3,
         {"x": "Year", "y": "alpha 3"},
-        "Policy Effect on Probability to be a male",
+        "One-Child Policy Effect on Probability to be a male",
     )
     fig2 = plot_results(
         dfpesr,
         {"x": "Year", "y": "PESR"},
-        "Policy Effect on Sex Ratio",
+        "One-Child Policy Effect on Sex Ratio",
     )
     fig1.write_image(produces["produces1"])
     fig2.write_image(produces["produces2"])
@@ -65,12 +66,12 @@ def task_plot_results_all(depends_on, produces):
     fig3 = plot_results_regional(
         dfa3_regional,
         {"x": "Year", "y": "alpha 3"},
-        "Policy Effect on Probability to be a male",
+        "One-Child Policy Effect on Probability to be a male",
     )
     fig4 = plot_results_regional(
         dfpesr_regional,
         {"x": "Year", "y": "PESR"},
-        "Policy Effect on Sex Ratio",
+        "One-Child Policy Effect on Sex Ratio",
     )
     fig3.write_image(produces["produces3"])
     fig4.write_image(produces["produces4"])
@@ -78,21 +79,21 @@ def task_plot_results_all(depends_on, produces):
     fig5 = plot_results(
         dfa3_control,
         {"x": "Year", "y": "alpha 3"},
-        "Policy Effect on Probability to be a male (with control)",
+        "One-Child Policy Effect on Probability to be a male (with control)",
     )
     fig5.write_image(produces["produces5"])
     dfa3_reg_control = load_model(depends_on["dfa3_reg_control"])
     fig6 = plot_results_regional(
         dfa3_reg_control,
         {"x": "Year", "y": "alpha 3"},
-        "Policy Effect on Probability to be a male (with control)",
+        "One-Child Policy Effect on Probability to be a male (with control)",
     )
     fig6.write_image(produces["produces6"])
     dfpesr_reg_control = load_model(depends_on["dfapesr_reg_control"])
     fig7 = plot_results_regional(
         dfpesr_reg_control,
-        {"x": "Year", "y": "alpha 3"},
-        "Policy Effect on Sex Ratio (with control)",
+        {"x": "Year", "y": "PESR"},
+        "One-Child Policy Effect on Sex Ratio (with control)",
     )
     fig7.write_image(produces["produces7"])
 
@@ -121,7 +122,42 @@ def task_plot_fig(depends_on, produces):
     figapp = pd.read_csv(depends_on["fig_app"])
     fig1 = plot_fig1(fig1_data)
     fig2 = plot_fig2(fig2_data)
-    figapp = plot_figqpp(figapp)
+    figapp = plot_figapp(figapp)
     fig1.write_image(produces["produces1"])
     fig2.write_image(produces["produces2"])
     figapp.write_image(produces["produces3"])
+
+
+kwargs3 = {
+    "produces": {
+        "produces1": BLD / "python" / "figures" / "A7.png",
+        "produces2": BLD / "python" / "figures" / "PESR_twochild.png",
+    },
+}
+
+
+@pytask.mark.depends_on(
+    {
+        "data": BLD / "python" / "models" / "coef_triple_did.pickle",
+    },
+)
+@pytask.mark.task(kwargs=kwargs3)
+def task_plot_results3(depends_on, produces):
+    """Plot the regression results by age (Python version)."""
+    data = load_model(depends_on["data"])
+    a7_all, Pesr3_all = plot_data_3did(data)
+    x = [i + 1000 for i in range(985, 991)]
+    dfa7 = pd.DataFrame({"x": x, "y": a7_all})
+    dfpesr3 = pd.DataFrame({"x": x, "y": Pesr3_all})
+    fig1 = plot_results(
+        dfa7,
+        {"x": "Year", "y": "alpha 7"},
+        "Two-Child Policy Effect on Probability to be a male",
+    )
+    fig2 = plot_results(
+        dfpesr3,
+        {"x": "Year", "y": "PESR"},
+        "Two-Child Policy Effect on Sex Ratio",
+    )
+    fig1.write_image(produces["produces1"])
+    fig2.write_image(produces["produces2"])

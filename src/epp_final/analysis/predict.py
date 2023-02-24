@@ -191,3 +191,90 @@ def rural_urban_dataframe(
         },
     )
     return dfa3_regional, dfpesr_regional
+
+
+def _PESR3(a0, a1, a2, a3, a4, a5, a6, a7):
+    """The policy effect on sex ratio (PESR), male number over 100 female.
+
+    Args:
+        a0 (float): intercept
+        a1 (float): ethnic effect
+        a2 (float): 1984 dummy, time effect
+        a3 (float): Hukou effect
+        a4 (float): ethnic effect times time effect
+        a5 (float): ethnic effect times Hukou effect
+        a6 (float): time effect times Hukou effect
+        a7 (float): two-child policy on Han household with non-ag Hukou after 1984
+
+    Returns:
+        PES: two-child policy effect on sex ratio
+
+    """
+    PES = 100 * (
+        (
+            (
+                (a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7)
+                / (1 - a1 - a2 - a3 - a4 - a5 - a6 - a7)
+                - (a0 + a1 + a3 + a5) / (1 - a0 - a1 - a3 - a5)
+            )
+            - (
+                (a0 + a2 + a3 + a4) / (1 - a0 - a2 - a3 - a4)
+                - (a0 + a3) / (1 - a0 - a3)
+            )
+        )
+        - (
+            ((a0 + a1 + a2 + a4) / (1 - a0 - a1 - a2 - a4) - (a0 + a1) / (1 - a0 - a1))
+            - ((a0 + a2) / (1 - a0 - a2) - a0 / (1 - a0))
+        )
+    )
+    return PES
+
+
+def year_data_split3(data):
+    """Split data by year.
+
+    Args:
+         data (pd.DataFrame): 1990 data for triple did.
+
+    Returns:
+         dict: Split data by years.
+
+    """
+    compare = (data["CN1990A_BIRTHY"] <= 984) * (data["CN1990A_BIRTHY"] >= 980)
+    year_data = {}
+    for i in range(985, 991):
+        year_data[f"Birth{i}"] = data[(data["CN1990A_BIRTHY"] == i) + compare].copy()
+    return year_data
+
+
+def gen_plot_data3(data):
+    """Generate data used for plot under triple did model.
+
+    Args:
+        data (dict): data split by year.
+
+    Returns:
+        dict: regression coefficients(value) by year(key)
+
+    """
+    X_variables = [
+        "CN1990A_NATION",
+        "Treat",
+        "CN1990A_HHTYA",
+        "H*T",
+        "H*K",
+        "K*T",
+        "H*K*T",
+    ]
+    year_results_all = {}
+    for i in range(985, 991):
+        workdf = data[f"Birth{i}"].copy()
+        Obs = workdf.shape[0]
+        Y = workdf["CN1990A_SEX"].values.reshape(Obs, 1)
+        X = workdf[X_variables].values.reshape(Obs, 7)
+        reg_all = LinearRegression().fit(X, Y)
+        a0 = reg_all.intercept_[0]
+        a1, a2, a3, a4, a5, a6, a7 = reg_all.coef_[0]
+        Pesr3 = _PESR3(a0, a1, a2, a3, a4, a5, a6, a7)
+        year_results_all[f"{i}"] = [a0, a1, a2, a3, a4, a5, a6, a7, Pesr3]
+    return year_results_all
