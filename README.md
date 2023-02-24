@@ -178,25 +178,35 @@ Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
 
 - One-Child Policy Effect
   - **A3.png**: One-child policy effect of the probility to be a male. The x-axis is
-    year from 1980 to 1990, y-axis is the $\\alpha_3$ and its range is from
-    $(-0.005,0.035)$.
+    year from 1980 to 1990, y-axis is the $\\alpha_3$.
   - **A3_regional.png**: One-child policy effect of the probility to be a male, grouped
     by urban area and rural area. The x-axis is time, from 1980 to 1990, y-axis is the
     $\\alpha_3$.
   - **A3_control.png**: One-child policy effect of the probility to be a male, grouped
     by urban area and rural area and controlled for the education level of the child's
-    parents. The x-axis is year from 1980 to 1990, y-axis is the $\\alpha_3$.
+    parents. The x-axis is years from 1980 to 1990, y-axis is the $\\alpha_3$.
   - **A3_regional_control.png**: One-child policy effect of the probility to be a male,
-    controlled for the education level of the child's parents.. The x-axis is year from
+    controlled for the education level of the child's parents.. The x-axis is years from
     1980 to 1990, y-axis is the $\\alpha_3$.
-  - **PESR.png**: One-child policy effect on sex ratio(PESR). The x-axis is year from
+  - **PESR.png**: One-child policy effect on sex ratio(PESR). The x-axis is years from
     1980 to 1990, y-axis is the $PESR$.
   - **PESR_regional.png**: One-child policy effect on sex ratio(PESR), grouped by urban
-    area and rural area. The x-axis is year from 1980 to 1990, y-axis is the $PESR$.
+    area and rural area. The x-axis is years from 1980 to 1990, y-axis is the $PESR$.
   - **PESR_regional_control.png**: One-child policy effect on sex ratio(PESR), grouped
     by urban area and rural area and controlled for the education level of the child's
-    parents. The x-axis is year from 1980 to 1990, y-axis is the $PESR$.
+    parents. The x-axis is years from 1980 to 1990, y-axis is the $PESR$.
 - Two-Child Policy Effect
+  - **A7.png**: Two-child policy effect of the probility to be a male. The x-axis is
+    years from 1985 to 1990, y-axis is the $\\alpha_7$.
+  - **PESR_twochild.png**: Tne-child policy effect on sex ratio(PESR). The x-axis is
+    years from 1985 to 1990, y-axis is the $PESR$.
+- Appendix in the original paper
+  - **fig1.png**: Sex ratio by birth cohorts. The x-axis is years from 1945 to 1990,
+    y-axis is the sex ration in each year.
+  - **fig2.png**: Sex ratio in each year by Han and ethnic minorities. The x-axis is
+    years from 1945 to 1990, y-axis is the sex ratio in each year.
+  - **fig_app**: Wage gaps by gender in China. The x-axis is years from 1988 to 2004,
+    y-axis is the mean wage of females and males.
 
 ## References
 
