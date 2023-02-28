@@ -155,7 +155,7 @@ Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
 1. Original data(path: src/data):
 
 - **raw_data.csv** is collected from
-  [IPUMS China 1990 and 2000 0.05% sampled census data](https://international.ipums.org/international-action/sample_details/country/cn#tab_cn1990a).
+  [IPUMS China 1990 0.05% and 2000 0.01% sampled census data](https://international.ipums.org/international-action/sample_details/country/cn#tab_cn1990a).
   It is a $2362403\\times47$ dataframe and contains individuals' information such as
   gender, ethnicity, birth year, relation with the household head, Hukou, and education
   level.
