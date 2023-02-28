@@ -6,11 +6,11 @@
 ## Usage
 
 To get started, first clone this github repository in your computer, then open terminal
-and change directory to where you cloned this repository, then create and activate the
+and change directory to where you cloned this repository (`.\EPP-Final-Project`), then create and activate the
 environment with
 
 ```console
-$ conda/mamba env create
+$ conda env create -f environment.yml
 $ conda activate epp_final
 ```
 
