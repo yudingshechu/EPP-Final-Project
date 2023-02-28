@@ -79,11 +79,9 @@ conducted in this project only use
 - $T$ is the birth cohort indicator: $T=1$ if the child was born after 1979, otherwise
   $T=0$.
 - $DD=\\bigg(E(S_i|H=1,T=1)-E(S_i|H=1,T=0)\\bigg)-\\bigg(E(S_i|H=0,T=1)-E(S_i|H=0,T=0)\\bigg)$;
-- The regression-adjusted DD model is: $S_i=\\alpha_0+\\alpha_1 H_i+\\alpha_2
-  T_i+\\alpha_3 (H_i * T_i)+\\epsilon_i$;
+- The regression-adjusted DD model is: $S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 (H_i * T_i)+\epsilon_i$;
 - Using the regression framework, control for the child's parents education level:
-  $S_i=\\alpha_0+\\alpha_1 H_i+\\alpha_2 T_i+\\alpha_3 (H_i \*
-  T_i)+X_i\\beta+\\epsilon_i$;
+  $S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 (H_i * T_i)+X_i\beta+\epsilon_i$;
 - $\\alpha_3$ is identical to $DD$.
 
 | $\\frac{males}{females}$ | Han                                                                                            | Minority                                               |
@@ -94,7 +92,7 @@ conducted in this project only use
 - The policy effect on sex ratio (PESR) can be calculated as:
   $PESR=100\*\\bigg\[\\bigg(\\frac{\\alpha_0+\\alpha_1+\\alpha_2+\\alpha_3}{1-(\\alpha_0+\\alpha_1+\\alpha_2+\\alpha_3)}-\\frac{\\alpha_0+\\alpha_1}{1-(\\alpha_0+\\alpha_1)}\\bigg)-\\bigg(\\frac{\\alpha_0+\\alpha_2}{1-(\\alpha_0+\\alpha_2)}-\\frac{\\alpha_0}{1-\\alpha_0}\\bigg)\\bigg\]$.
 
-## Apply the Empirical Strategy in Li, H., Yi, J., & Zhang, J. (2011) in Estimating the effect of Two-Child Policy on Sex ratio in Han Chinese---Triple Diff-in-Diff
+## Apply the Empirical Strategy in Li, H., Yi, J., & Zhang, J. (2011) in Estimating the Effect of Two-Child Policy on Sex ratio in Han Chinese---Triple Diff-in-Diff
 
 From 1979 until 2015, Chinese citizens were generally permiited to have only one child,
 with certain exceptions such that:
@@ -133,13 +131,10 @@ Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
   $-\\bigg(E(S_i|H=0,K=1,T=1)-E(S_i|H=0,K=1,T=0)\\bigg)\\bigg\]$
   $-\\bigg\[\\bigg(E(S_i|H=1,K=0,T=1)-E(S_i|H=1,K=0,T=0)\\bigg)$
   $-\\bigg(E(S_i|H=0,K=0,T=1)-E(S_i|H=0,K=0,T=0)\\bigg)\\bigg\]$
-- The regression-adjusted DDD model is: $S_i=\\alpha_0+\\alpha_1 H_i+\\alpha_2
-  T_i+\\alpha_3 K_i+\\alpha_4 (H_i * T_i)+\\alpha_5 (H_i * K_i)+\\alpha_6 (T_i \*
-  K_i)+\\alpha_7 (H_i * T_i * K_i)+\\epsilon_i$;
+- The regression-adjusted DDD model is: 
+  $S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 K_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * K_i)+\alpha_6 (T_i * K_i)+\alpha_7 (H_i * T_i * K_i)+\epsilon_i$;
 - Using the regression framework, control for the child's parents education level:
-  $S_i=\\alpha_0+\\alpha_1 H_i+\\alpha_2 T_i+\\alpha_3 K_i+\\alpha_4 (H_i \*
-  T_i)+\\alpha_5 (H_i * K_i)+\\alpha_6 (T_i * K_i)+\\alpha_7 (H_i * T_i \*
-  K_i)+X\*\\beta+\\epsilon_i$;
+  $S_i=\alpha_0+\alpha_1 H_i+\alpha_2 T_i+\alpha_3 K_i+\alpha_4 (H_i * T_i)+\alpha_5 (H_i * K_i)+\alpha_6 (T_i * K_i)+\alpha_7 (H_i * T_i * K_i)+X*\beta+\epsilon_i$;
 - $\\alpha_7$ is identical to $DDD$.
 
 | $\\frac{males}{females}$ | Han with non-ag Hukou                                                                                                                                                          | Minority with non-ag Hukou                                                                     | Han with ag Hukou                                                                              | Minority with ag Hukou                                 |
@@ -194,7 +189,7 @@ Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
 
 ## Interpretation of Figures
 
-- One-Child Policy Effect
+- **One-Child Policy Effect**
   - **A3.png**: One-child policy effect of the probility to be a male. The x-axis is
     year from 1980 to 1990, y-axis is the $\\alpha_3$.
   - **A3_regional.png**: One-child policy effect of the probility to be a male, grouped
@@ -213,12 +208,12 @@ Han Chinese and ethnic minorities Chinese. Therefore, we have eight groups:
   - **PESR_regional_control.png**: One-child policy effect on sex ratio(PESR), grouped
     by urban area and rural area and controlled for the education level of the child's
     parents. The x-axis is years from 1980 to 1990, y-axis is the $PESR$.
-- Two-Child Policy Effect
+- **Two-Child Policy Effect**
   - **A7.png**: Two-child policy effect of the probility to be a male. The x-axis is
     years from 1985 to 1990, y-axis is the $\\alpha_7$.
   - **PESR_twochild.png**: Tne-child policy effect on sex ratio(PESR). The x-axis is
     years from 1985 to 1990, y-axis is the $PESR$.
-- Appendix in the original paper
+- **Appendix in the original paper**
   - **fig1.png**: Sex ratio by birth cohorts. The x-axis is years from 1945 to 1990,
     y-axis is the sex ration in each year.
   - **fig2.png**: Sex ratio in each year by Han and ethnic minorities. The x-axis is
