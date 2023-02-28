@@ -5,7 +5,9 @@
 
 ## Usage
 
-To get started, first clone this github repository in your computer, then open terminal
+#### Creating project
+
+To get started, first clone this github repository in your computer ([if you do not know how, check here](https://blog.hubspot.com/website/clone-github-repository) [or here](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)), then open Terminal (or Command line)
 and change directory to where you cloned this repository (`.\EPP-Final-Project`), then create and activate the
 environment with
 
@@ -14,6 +16,7 @@ $ conda env create -f environment.yml
 $ conda activate epp_final
 ```
 
+Environment creating may need some time, be patient please. 
 To build the project, type
 
 ```console
@@ -22,6 +25,21 @@ $ pytask
 
 Then you can find generated results in the `bld` folder of `EPP-Final-Project`
 directory.
+
+If you get stuck when running plotting task, please feel free to close terminal and re-open it in this project's directory, and run 
+
+```
+$ conda activate epp_final
+$ pip install kaleido==0.1.0post1
+$ pytask
+```
+
+Then you can find generated results in the `bld` folder of `EPP-Final-Project`
+directory.
+
+#### Requirements
+
+This project require you have [git](https://git-scm.com/) and [anaconda](https://www.anaconda.com/) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed in your computer in advance. 
 
 ## Credits
 
